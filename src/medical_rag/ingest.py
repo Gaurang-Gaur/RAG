@@ -1,5 +1,5 @@
 from sentence_transformers import SentenceTransformer
-
+import chromadb;
 with open("data/report.txt", "r") as file:
     text = file.read()
 
@@ -16,9 +16,9 @@ def check_text(text,chunk_size=300):
 
 chunks=check_text(text);
 
-for i ,chunk in enumerate(chunks):
-    print(f"{i}----------------------------------------------------------------------------");
-    print(chunk)
+# for i ,chunk in enumerate(chunks):
+#     print(f"{i}----------------------------------------------------------------------------");
+#     print(chunk)
 
 model = SentenceTransformer(
     "sentence-transformers/all-MiniLM-L6-v2"
@@ -26,4 +26,16 @@ model = SentenceTransformer(
 
 embeddings = model.encode(chunks)
 
-print(embeddings[0]);
+# print(embeddings.shape);
+client=chromadb.PersistentClient(path="./chroma_db");
+
+#now, make collection/table
+collection=client.get_or_create_collection(
+    name="medical_reports"
+);
+#now, add values into collection with multiple insertation at once...
+
+collection.add(ids=[f"chunks{i}" for i in range(len(chunks))],
+                    documents=chunks,
+                    embeddings=embeddings.tolist());
+
