@@ -34,8 +34,12 @@ collection=client.get_or_create_collection(
     name="medical_reports"
 );
 #now, add values into collection with multiple insertation at once...
-
+userdata=input("");
 collection.add(ids=[f"chunks{i}" for i in range(len(chunks))],
                     documents=chunks,
-                    embeddings=embeddings.tolist());
+                    embeddings=embeddings.tolist(),metadata=[
+                        {
+                            "userdata":f"{userdata}"
+                        }
+                    ]);
 
