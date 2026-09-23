@@ -1,6 +1,6 @@
 from sentence_transformers import SentenceTransformer
 import chromadb
-
+from langchain_text_splitters import RecursiveCharacterTextSplitter #module and class/function/constants etc
 model = SentenceTransformer(
     "sentence-transformers/all-MiniLM-L6-v2"
 )
@@ -12,6 +12,7 @@ client = chromadb.PersistentClient(
 collection = client.get_or_create_collection(
     name="medical_reports"
 )
+
 chunks = [
     "Hemoglobin: 11.2 g/dL.",
     "White Blood Cell Count: 8040 /µL.",

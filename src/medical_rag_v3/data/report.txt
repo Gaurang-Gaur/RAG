@@ -1,0 +1,21 @@
+Patient Medical Report
+
+Complete Blood Count
+
+Hemoglobin: 11.2 g/dL.
+White Blood Cell Count: 8040 /µL.
+Platelet Count: 250000 /µL.
+
+Pulmonary Function Test
+
+FEV1: 82% of predicted value.
+FVC: 88% of predicted value.
+MMEF: 69% of predicted value.
+
+The pulmonary function results should be interpreted
+together with the patient's symptoms and clinical findings.
+
+Kidney Function
+
+Creatinine: 0.9 mg/dL.
+Blood Urea Nitrogen: 18 mg/dL.
