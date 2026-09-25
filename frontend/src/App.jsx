@@ -8,7 +8,8 @@ import {
   LoaderCircle,
   AlertCircle,
 } from "lucide-react";
-
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 function App() {
   const [documentId, setDocumentId] = useState(null);
   const [documentName, setDocumentName] = useState(null);
@@ -413,9 +414,11 @@ function App() {
                     </div>
 
                     <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-sm px-5 py-4">
-                      <p className="text-sm leading-6 whitespace-pre-wrap">
-                        {answer}
-                      </p>
+                      <div className="prose prose-slate max-w-none">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                          {answer}
+                        </ReactMarkdown>
+                      </div>
                     </div>
                   </div>
                 )}
