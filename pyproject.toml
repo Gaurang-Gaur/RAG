@@ -1,5 +1,5 @@
 [project]
-name = "medical_rag_v4
+name = "medical_rag_v4"
 version = "0.40"
 description = "Add your description here"
 readme = "README.md"
@@ -11,13 +11,15 @@ dependencies = [
     "chromadb>=1.5.9",
     "fastapi>=0.141.1",
     "langchain-community>=0.4.2",
+    "langchain-google-genai>=4.4.0",
     "langchain-text-splitters>=1.1.2",
     "pypdf>=6.19.0",
+    "python-multipart>=0.0.32",
     "sentence-transformers>=6.1.0",
 ]
 
 [project.scripts]
-medical_rag_v4= "medical_rag_v4main"
+medical_rag_v4= "medical_rag_v4:main"
 
 [build-system]
 requires = ["uv_build>=0.12.17,<0.13.0"]
