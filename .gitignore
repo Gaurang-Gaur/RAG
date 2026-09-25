@@ -12,3 +12,9 @@ wheels/
 .env
 
 *chroma_db
+
+# *data
+*.pdf
+data/uploads/
+data/chroma_db/src/medical_rag_v4/data/uploads/ 
+src/medical_rag_v4/data/chroma_db/ 

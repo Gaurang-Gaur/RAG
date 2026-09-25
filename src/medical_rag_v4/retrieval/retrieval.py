@@ -8,7 +8,7 @@ def retrieval(question: str,user_id: str,document_id: str):
 
         query_embeddings=[query_embedding],
 
-        n_results=5,
+        n_results=1,
 
         where={
             "$and": [

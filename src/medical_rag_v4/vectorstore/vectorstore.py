@@ -1,8 +1,11 @@
-from sentence_transformers import SentenceTransformer
-import chromadb
 from pathlib import Path
-from medical_rag_v4.embeddings.embeddings import embedding_model;
 
+import chromadb
+
+from medical_rag_v4.embeddings.embeddings import embedding_model
+
+
+# Keep Chroma data outside the source package
 chroma_path = Path(__file__).parent.parent / "data" / "chroma_db"
 
 client = chromadb.PersistentClient(
@@ -15,7 +18,13 @@ collection = client.get_or_create_collection(
 
 
 def add_chunks(chunks):
-    texts = [chunk.page_content for chunk in chunks]
+    if not chunks:
+        return 0
+
+    texts = [
+        chunk.page_content
+        for chunk in chunks
+    ]
 
     metadatas = [
         chunk.metadata
@@ -26,18 +35,31 @@ def add_chunks(chunks):
         texts
     ).tolist()
 
+    user_id = chunks[0].metadata["user_id"]
+    document_id = chunks[0].metadata["document_id"]
+
     ids = [
-        f"{chunk.metadata['user_id']}_"
-        f"{chunk.metadata['document_id']}_"
-        f"{chunk.metadata['chunk_index']}"
+        f"{user_id}_{document_id}_{chunk.metadata['chunk_index']}"
         for chunk in chunks
     ]
 
-    collection.upsert(
+    # Remove previous version of this document.
+    # This makes re-uploading the same document safe.
+    collection.delete(
+        where={
+            "$and": [
+                {"user_id": user_id},
+                {"document_id": document_id},
+            ]
+        }
+    )
+
+    # Insert the fresh chunks
+    collection.add(
         ids=ids,
         embeddings=embeddings,
         documents=texts,
-        metadatas=metadatas
+        metadatas=metadatas,
     )
 
     return len(chunks)
